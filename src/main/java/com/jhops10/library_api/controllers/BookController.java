@@ -1,6 +1,9 @@
 package com.jhops10.library_api.controllers;
 
+import com.jhops10.library_api.dto.book.BookRequestDTO;
+import com.jhops10.library_api.dto.book.BookResponseDTO;
 import com.jhops10.library_api.entities.Book;
+import com.jhops10.library_api.mappers.BookMapper;
 import com.jhops10.library_api.services.book.BookService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -22,24 +25,28 @@ public class BookController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Book>> findAll() {
+    public ResponseEntity<List<BookResponseDTO>> findAll() {
         List<Book> books = bookService.findAll();
-        return ResponseEntity.ok(books);
+        List<BookResponseDTO> booksResponseDTO = books.stream().map(BookMapper::toDTO).toList();
+        return ResponseEntity.ok(booksResponseDTO);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Book> findById(@PathVariable("id") Long id) {
+    public ResponseEntity<BookResponseDTO> findById(@PathVariable("id") Long id) {
         Optional<Book> result = bookService.findById(id);
         if (result.isPresent()) {
-            return ResponseEntity.ok(result.get());
+            BookResponseDTO response = BookMapper.toDTO(result.get());
+            return ResponseEntity.ok(response);
         }
         return ResponseEntity.notFound().build();
     }
 
     @PostMapping
-    public ResponseEntity<Book> save(@Valid @RequestBody Book book) {
+    public ResponseEntity<BookResponseDTO> save(@Valid @RequestBody BookRequestDTO bookRequestDTO) {
+        Book book = BookMapper.toEntity(bookRequestDTO);
         Book savedBook = bookService.save(book);
-        return ResponseEntity.status(HttpStatus.CREATED).body(savedBook);
+        BookResponseDTO response = BookMapper.toDTO(savedBook);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @DeleteMapping("/{id}")
