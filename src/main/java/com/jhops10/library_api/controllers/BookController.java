@@ -33,12 +33,9 @@ public class BookController {
 
     @GetMapping("/{id}")
     public ResponseEntity<BookResponseDTO> findById(@PathVariable("id") Long id) {
-        Optional<Book> result = bookService.findById(id);
-        if (result.isPresent()) {
-            BookResponseDTO response = BookMapper.toDTO(result.get());
-            return ResponseEntity.ok(response);
-        }
-        return ResponseEntity.notFound().build();
+        Book result = bookService.findById(id);
+        BookResponseDTO response = BookMapper.toDTO(result);
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping
