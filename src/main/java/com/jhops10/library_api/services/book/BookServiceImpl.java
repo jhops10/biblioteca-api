@@ -1,6 +1,7 @@
 package com.jhops10.library_api.services.book;
 
 import com.jhops10.library_api.entities.Book;
+import com.jhops10.library_api.exceptions.BookNotFoundException;
 import com.jhops10.library_api.repositories.BookRepository;
 import org.springframework.stereotype.Service;
 
@@ -22,8 +23,9 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public Optional<Book> findById(Long id) {
-        return bookRepository.findById(id);
+    public Book findById(Long id) {
+        return bookRepository.findById(id)
+                .orElseThrow(() -> new BookNotFoundException("Livro com ID " + id + " não encontrado"));
     }
 
     @Override
@@ -33,9 +35,9 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public void deleteById(Long id) {
-        Optional<Book> bookForDelete = findById(id);
-        if (bookForDelete.isPresent()) {
-            bookRepository.deleteById(id);
+        if(!bookRepository.existsById(id)) {
+            throw new BookNotFoundException("Não foi possível excluir: Livro com ID " + id + " não encontrado");
         }
+        bookRepository.deleteById(id);
     }
 }

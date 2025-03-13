@@ -1,6 +1,7 @@
 package com.jhops10.library_api.services.book;
 
 import com.jhops10.library_api.entities.Book;
+import com.jhops10.library_api.exceptions.BookNotFoundException;
 import com.jhops10.library_api.repositories.BookRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -30,14 +31,14 @@ public class BookServiceImplTest {
 
         when(bookRepository.findById(bookId)).thenReturn(java.util.Optional.of(book));
 
-        Optional<Book> result = bookService.findById(bookId);
+        Book result = bookService.findById(bookId);
 
-        assertTrue(result.isPresent());
-        assertEquals(bookId, result.get().getId());
-        assertEquals("Title", result.get().getTitle());
-        assertEquals("Author", result.get().getAuthor());
-        assertEquals(2025, result.get().getReleaseYear());
-        assertEquals("Publisher", result.get().getPublisher());
+        assertNotNull(result);
+        assertEquals(bookId, result.getId());
+        assertEquals("Title", result.getTitle());
+        assertEquals("Author", result.getAuthor());
+        assertEquals(2025, result.getReleaseYear());
+        assertEquals("Publisher", result.getPublisher());
 
         verify(bookRepository, times(1)).findById(bookId);
 
@@ -49,9 +50,8 @@ public class BookServiceImplTest {
 
         when(bookRepository.findById(bookId)).thenReturn(Optional.empty());
 
-        Optional<Book> result = bookService.findById(bookId);
 
-        assertFalse(result.isPresent());
+        assertThrows(BookNotFoundException.class, () -> bookService.findById(bookId));
 
         verify(bookRepository, times(1)).findById(bookId);
 
