@@ -11,6 +11,7 @@ import java.util.List;
 @Service
 public class UserServiceImpl implements UserService {
 
+
     private final UserRepository userRepository;
 
     public UserServiceImpl(UserRepository userRepository) {
@@ -41,4 +42,13 @@ public class UserServiceImpl implements UserService {
         return userRepository.findByEmail(email)
                 .orElseThrow(() -> new UserNotFoundException("Usuário com o email " + email + " não encontrado."));
     }
+
+    @Override
+    public void deleteById(Long id) {
+        if (!userRepository.existsById(id)) {
+            throw new UserNotFoundException("Usuário com id " + id + " não encontrado.");
+        }
+        userRepository.deleteById(id);
+    }
+
 }

@@ -8,20 +8,16 @@ import jakarta.validation.constraints.NotNull;
 public class BookRequestDTO {
 
     @NotBlank(message = "O título não pode estar vazio.")
-    @Column(nullable = false, length = 120)
     private String title;
 
     @NotBlank(message = "O autor não pode estar vazio.")
-    @Column(nullable = false)
     private String author;
 
     @NotNull(message = "O ano de lançamento é obrigatório.")
     @Min(value = 1, message = "O ano de lançamento deve ser maior que 0.")
-    @Column(nullable = false)
     private Integer releaseYear;
 
     @NotBlank(message = "A editora não pode estar vazia.")
-    @Column(nullable = false)
     private String publisher;
 
     public BookRequestDTO() {
