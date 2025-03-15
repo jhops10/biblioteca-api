@@ -26,6 +26,8 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET,"/books").permitAll()
                         .requestMatchers(HttpMethod.POST,"/books").permitAll()
                         .requestMatchers(HttpMethod.DELETE,"/books").permitAll()
+                        .requestMatchers(HttpMethod.GET,"/users").permitAll()
+                        .requestMatchers(HttpMethod.POST,"/users").permitAll()
                         .anyRequest().permitAll()
                 );
 
