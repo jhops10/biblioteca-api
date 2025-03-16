@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 @Table(name = "tb_users")
 public class User {
 
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -85,4 +86,5 @@ public class User {
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
+
 }
