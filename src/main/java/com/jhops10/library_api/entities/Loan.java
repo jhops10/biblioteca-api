@@ -40,6 +40,12 @@ public class Loan {
         this.status = LoanStatus.ACTIVE;
     }
 
+    public Loan(User user, Book book, LocalDateTime now) {
+        this.user = user;
+        this.book = book;
+        this.loanDate = now;
+    }
+
     public Long getId() {
         return id;
     }
