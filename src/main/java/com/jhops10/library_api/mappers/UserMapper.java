@@ -1,5 +1,6 @@
 package com.jhops10.library_api.mappers;
 
+import com.jhops10.library_api.dto.loan.LoanDTO;
 import com.jhops10.library_api.dto.user.UserRequestDTO;
 import com.jhops10.library_api.dto.user.UserResponseDTO;
 import com.jhops10.library_api.entities.User;
@@ -24,6 +25,14 @@ public class UserMapper {
         userDTO.setPassword(user.getPassword());
         userDTO.setRole(user.getRole());
         userDTO.setCreatedAt(user.getCreatedAt());
+        userDTO.setLoans(user.getLoans()
+                .stream()
+                .map(loan -> new LoanDTO(loan.getId(),
+                        loan.getBook().getId(),
+                        loan.getUser().getId(),
+                        loan.getLoanDate(),
+                        loan.getDueDate()))
+                .toList());
         return userDTO;
     }
 }

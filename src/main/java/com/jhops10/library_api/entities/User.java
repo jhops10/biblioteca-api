@@ -3,6 +3,8 @@ package com.jhops10.library_api.entities;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "tb_users")
@@ -26,6 +28,9 @@ public class User {
     private UserRole role;
 
     private LocalDateTime createdAt = LocalDateTime.now();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Loan> loans = new ArrayList<>();
 
     public User() {
     }
@@ -87,4 +92,11 @@ public class User {
         this.createdAt = createdAt;
     }
 
+    public List<Loan> getLoans() {
+        return loans;
+    }
+
+    public void setLoans(List<Loan> loans) {
+        this.loans = loans;
+    }
 }

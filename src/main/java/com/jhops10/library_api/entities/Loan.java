@@ -16,6 +16,7 @@ public class Loan {
 
     @NotNull
     @ManyToOne
+    @JoinColumn(name = "user_id")
     private User user;
 
     @NotNull
@@ -82,6 +83,9 @@ public class Loan {
         return dueDate;
     }
 
+    public void setDueDate(LocalDateTime dueDate) {
+        this.dueDate = dueDate;
+    }
 
     public LoanStatus getStatus() {
         return status;
