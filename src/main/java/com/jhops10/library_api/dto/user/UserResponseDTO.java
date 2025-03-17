@@ -1,8 +1,11 @@
 package com.jhops10.library_api.dto.user;
 
+import com.jhops10.library_api.dto.loan.LoanDTO;
 import com.jhops10.library_api.entities.UserRole;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class UserResponseDTO {
 
@@ -12,19 +15,22 @@ public class UserResponseDTO {
     private String password;
     private UserRole role;
     private LocalDateTime createdAt = LocalDateTime.now();
+    private List<LoanDTO> loans;
 
     public UserResponseDTO() {
     }
 
-    public UserResponseDTO(Long id, String name, String email, String password, UserRole role, LocalDateTime createdAt) {
+    public UserResponseDTO(Long id, String name, String email, String password, UserRole role, LocalDateTime createdAt, List<LoanDTO> loans) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.password = password;
         this.role = role;
         this.createdAt = createdAt;
+        this.loans = loans.stream()
+                .map(loan -> new LoanDTO(loan.getId(), loan.getBookId(), loan.getUserId(), loan.getLoanDate(), loan.getDueDate()))
+                .collect(Collectors.toList());
     }
-
 
     public Long getId() {
         return id;
@@ -72,5 +78,13 @@ public class UserResponseDTO {
 
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public List<LoanDTO> getLoans() {
+        return loans;
+    }
+
+    public void setLoans(List<LoanDTO> loans) {
+        this.loans = loans;
     }
 }
