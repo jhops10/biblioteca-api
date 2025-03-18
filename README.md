@@ -5,7 +5,7 @@ Projeto desenvolvido para gerenciamento de uma biblioteca online, permitindo cad
 ## 🚀 Tecnologias Utilizadas
 
 - **Java 17**
-- **Spring Boot** (Spring Web, Spring Data JPA)
+- **Spring Boot** (Spring Web, Spring Data JPA, Spring Validation)
 - **Maven**
 - **MySQL**
 
