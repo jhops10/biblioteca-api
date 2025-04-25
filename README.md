@@ -20,8 +20,8 @@ Projeto desenvolvido para gerenciamento de uma biblioteca online, permitindo cad
 
 1. Clone o repositório:
    ```bash
-   git clone https://github.com/jhops10/library-api.git
-   cd library-api
+   git clone https://github.com/jhops10/biblioteca-api.git
+   cd biblioteca-api
    ```
 2. Configure o banco de dados no `application.properties`.
 3. Execute o projeto com Maven:
